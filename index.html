@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script type="text/javascript" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+  <meta charset="UTF-8">
+  <title>4次曲面 $z = x⁴ + y⁴ - 2(x-y)²$</title>
+  <!-- Plotly.js の読み込み -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <!-- MathJax (LaTeXレンダリング用) の読み込み -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    #plot { width: 90vw; height: 90vh; }
+  </style>
+</head>
+<body>
+
+<div id="plot"></div>
+
+<script>
+  const size = 80;
+  const x = [], y = [], z = [];
+  const range = 2;
+
+  for (let i = 0; i < size; i++) {
+    x[i] = -range + (2 * range * i) / (size - 1);
+    y[i] = -range + (2 * range * i) / (size - 1);
+  }
+
+  for (let i = 0; i < size; i++) {
+    z[i] = [];
+    for (let j = 0; j < size; j++) {
+      const xi = x[j];
+      const yj = y[i];
+      z[i][j] = Math.pow(xi, 4) + Math.pow(yj, 4) - 2 * Math.pow(xi - yj, 2);
+    }
+  }
+
+  const data = [{
+    z: z,
+    x: x,
+    y: y,
+    type: 'surface',
+    colorscale: 'Viridis'
+  }];
+
+  const layout = {
+    title: { text: '曲面 $z = x^4 + y^4 - 2(x - y)^2$' },
+    autosize: true,
+    scene: {
+      xaxis: { title: { text: ' $x$' } },
+      yaxis: { title: { text: ' $y$' } },
+      zaxis: { title: { text: ' $z$' } }
+    }
+  };
+
+  Plotly.newPlot('plot', data, layout);
+</script>
+
+</body>
+</html>
